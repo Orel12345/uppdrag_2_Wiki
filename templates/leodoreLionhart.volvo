@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leodore Lionhart</title>
+</head>
+<body>
+    <h1>Leodore Lionhart</h1>
+    <h2>Lite fakta om Leodore Lionhart</h2>
+    <p>name: %{name}%</p>
+    <p>species: %{species}%</p>
+    <p>gender: %{gender}%</p>
+    <p>occupation: %{occupation}%</p>
+    <ul>
+        %{personalityTraits}%
+
+    </ul>
+</body>
+</html>
