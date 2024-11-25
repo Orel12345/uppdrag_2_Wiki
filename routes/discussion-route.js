@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 
 export async function handleDiscussionRoute(pathSegments, request, response){
     let nextSegment = pathSegments.shift();
-
+    // variabler med info som finns med i ett forum
     let posts = [
         {
             "title": "Taming",
@@ -43,13 +43,15 @@ export async function handleDiscussionRoute(pathSegments, request, response){
         }
     ];
 
+    //Sker om ingen ytterligare "fråga" efter sökvägen har angetts eller en sökväg som inte finns har angetts
     if (!nextSegment){
          if (pathSegments.length > 0){
         response.writeHead(404,  {'Content-Type': 'text/plain'});
         response.write('404 Not Found');
         response.end();
         return;
-    }
+    }   
+        //kollar om HTTP metoden är GET, annars ges ett 405 fel ut (method not allowed)
         if (request.method !== 'GET'){
             response.writeHead(405, {'content-Type': 'text/plain'});
             response.write('405 Method Not Allowed');
@@ -57,28 +59,29 @@ export async function handleDiscussionRoute(pathSegments, request, response){
             return;
         }
         
+        //Läser igenom filen posts i templats mappen och gör det till en string
         let template = (await fs.readFile('templates/posts.volvo')).toString();
 
-
+        //Kör igenom post variabeln och skapar en lista av den
         let postsString = '';
         for (let i = 0; i < posts.length; i ++){
             postsString += '<li>' + posts[i].title + ': ' + posts[i].content + " " + posts[i].author + ': ' + posts[i].date + '</li>';
         
         }
-
+        //byter ut Discussion mot listan som skapades ovan
         template = template.replaceAll('%{Discussion}%', postsString);
         
 
 
         
-
+        //byter ut Discussion mot listan som skapades ovan
         response.writeHead(200, {'Content-Type': 'text/html;charset=UTF-8'});
         response.write(template);
         response.end();
         return;
     }
     
-
+    //Visar 404 not found om inte sökvägen hittas.
     response.writeHead(404, {'content-Type': 'text/plain'});
     response.write('404 Not Found');
     response.end();
